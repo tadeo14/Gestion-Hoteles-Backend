@@ -3,22 +3,12 @@ const routerAuth = express.Router ();
 
 
 
-routerAuth.get('/saludo', (req, res) => {
-    res.send ('Hola saludos desde el backend');
+routerAuth.post('login', (req, res) => {
+    res.send('login');
 });
 
-
-routerAuth.post('/crearUsuario', (req, res) => {
-    res.send('Usuario creado'); 
+routerAuth.post('registro', (req, res) => {
+    res.send('registro');
 });
-
-routerAuth.delete('/borrarElemento', (req, res) => {
-    res.send('Usuario eliminado');
-});
-
-routerAuth.put('/editar', (req, res) => {
-    res.send('Usuario editado');
-});
-
 
 module.exports = routerAuth;  //se utiliza la variable definida 
