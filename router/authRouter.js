@@ -6,7 +6,7 @@ routerAuth.post('/login', (req, res) => {
     res.send('login');
 });
 
-routerAuth.post('/registro', (req, res) => {
+routerAuth.post('/registro', async (req, res) => {
     
     const { name, edad, email, password } = req.body;
 
@@ -17,7 +17,9 @@ routerAuth.post('/registro', (req, res) => {
     
     const usuario = new usuarioModel(req.body);
     console.log(usuario);            
-                
+    
+    await usuario.sabe();
+
     res.send('usuario creado');
 });
 
