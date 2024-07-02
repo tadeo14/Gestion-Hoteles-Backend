@@ -1,6 +1,6 @@
 const express = require("express");
-const usuarioModel = require('../models/usuario-model.js');
 const routerAuth = express.Router();
+const usuarioModel = require('../models/usuario-model');
 
 routerAuth.post('/login', (req, res) => {
     res.send('login');
@@ -8,15 +8,20 @@ routerAuth.post('/login', (req, res) => {
 
 routerAuth.post('/registro', (req, res) => {
     
-    
-    //validaciones
-    
-    console.log(req.body);
-              
-    
+    const { name, edad, email, password } = req.body;
 
+    //validaciones 
+    if (name === "" || edad === "" || email === "" || password === "") {
+        res.send('Todos los campos son obligatorios');
+    }
+			
+    const usuario = new usuarioModel(req.body);
+    console.log(usuario);
     res.send('usuario creado');
 });
+    //validaciones
+    
+
 
 
 
