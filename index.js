@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const dbConnection = require('./database/config');
 const app = express(); 
 require('dotenv').config();
@@ -13,7 +13,6 @@ app.use('/auth', require('./router/authRouter'));
 dbConnection(); 
 
 // Iniciar el servidor
-const PORT = process.env.PORTLOCAL || 5000;
-app.listen(PORT, () => {
-    console.log(`El servidor se está ejecutando en el puerto ${PORT}`);
+app.listen(process.env.PORTLOCAL, () => {
+	console.log(`Ejecutandose en el puerto ${process.env.PORTLOCAL}`);
 });
