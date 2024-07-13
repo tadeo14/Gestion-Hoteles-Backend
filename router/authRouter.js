@@ -6,7 +6,7 @@ routerAuth.post('/login', (req, res) => {
     res.send('login');
 });
 
-routerAuth.post('/registro', (req, res) => {
+routerAuth.post('/registro', async (req, res) => {
     
     const { name, edad, email, password } = req.body;
 
@@ -15,8 +15,12 @@ routerAuth.post('/registro', (req, res) => {
         res.send('Todos los campos son obligatorios');
     }
 			
-    const usuario = new usuarioModel(req.body);
-    console.log(usuario);
+    const usuario = new usuarioModel (req.body);
+
+    //guardamos en la base de datos
+    await usuario.save();
+
+
     res.send('usuario creado');
 });
     //validaciones
