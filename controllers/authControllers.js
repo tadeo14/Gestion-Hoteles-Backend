@@ -7,19 +7,29 @@ const crearUsuario = async (req, res) => {
 
     //validaciones 
     if (name === "" || edad === "" || email === "" || password === "") {
-        res.send('Todos los campos son obligatorios');
+        res.json({
+            msg :'Todos los campos son obligatorios',
+            
+        });
         }
         //Analizamos si el usuario no fue registrado con email
         let usuario = await usuarioModel.findOne({ email });
-        console.log(usuario);
-			
-     usuario = new usuarioModel(req.body);
+        if (usuario) {
+            return res.json({
+                mensaje:'El usuario registrado ya existe',
+            });
+        }
+
+
+    usuario = new usuarioModel(req.body);
 
     //guardamos en la base de datos
     await usuario.save();
 
 
-        res.send('usuario creado');
+        res.json({
+            msg: 'usuario creado',
+        });
         
     } catch (error) {
         console.log(error);
