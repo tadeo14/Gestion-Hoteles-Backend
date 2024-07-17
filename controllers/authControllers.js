@@ -46,4 +46,9 @@ const crearUsuario = async (req, res) => {
     
 };
 
-module.exports = { crearUsuario };
+const loginUsuario = (req, res) => {
+    res.send('login');
+}
+
+
+module.exports = { crearUsuario, loginUsuario };

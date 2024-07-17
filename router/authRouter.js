@@ -1,10 +1,8 @@
 const express = require("express");
 const routerAuth = express.Router();
-const { crearUsuario } = require("../controllers/authControllers");
+const { crearUsuario, loginUsuario } = require("../controllers/authControllers");
 
-routerAuth.post('/login', (req, res) => {
-    res.send('login');
-});
+routerAuth.post('/login', loginUsuario);
 
 routerAuth.post('/registro', crearUsuario);
     
