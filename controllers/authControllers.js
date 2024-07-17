@@ -1,4 +1,5 @@
 const usuarioModel = require("../models/usuario-model");
+const bcrypt = require('bcrypt');
 
 const crearUsuario = async (req, res) => {
     
@@ -21,10 +22,14 @@ const crearUsuario = async (req, res) => {
         }
 
 
-    usuario = new usuarioModel(req.body);
+        usuario = new usuarioModel(req.body);
+        
+        const salt = bcrypt.genSaltSync(10); //le da la robustes a nuestro numero
+        const hash = bcrypt.hashSync(password, salt);
+        
 
-    //guardamos en la base de datos
-    await usuario.save();
+        //guardamos en la base de datos
+        await usuario.save();
 
 
         res.json({
