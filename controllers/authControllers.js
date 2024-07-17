@@ -46,9 +46,51 @@ const crearUsuario = async (req, res) => {
     
 };
 
-const loginUsuario = (req, res) => {
-    res.send('login');
-}
+const loginUsuario = async (req, res) => {
+    
+    try {
+        const { email, password } = req.body;
+        //validaciones
+
+        if (email === '' || password === '') {
+            res.status(400).json({
+                msg :'Todos los campos son obligatorios',            
+            });
+        }
+
+        let usuario = await usuarioModel.findOne({ email });
+        if (!usuario) {
+            return res.status(400).json({
+                mensaje: 'El email o contraseña no existe',
+            });
+        }
+    
+        //validamos password, vamos a comparar la contraseña del correo que encontre con la que ingreso el usuario
+        const validarPassword = bcrypt.compareSync(password, usuario.password); // true
+       
+        if (!validarPassword) {
+            res.status(400).json({
+                msg: 'El email o contraseña no existe',
+            });
+        }
+        
+        
+        res.status(200).json({
+    
+            msg: 'Login exitoso',
+        }); 
+        
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Contactarse con un administrador',
+        })
+        
+    }
+
+
+
+   
+};
 
 
 module.exports = { crearUsuario, loginUsuario };
