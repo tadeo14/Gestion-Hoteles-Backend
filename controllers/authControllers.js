@@ -8,7 +8,7 @@ const crearUsuario = async (req, res) => {
 
     //validaciones 
     if (name === "" || edad === "" || email === "" || password === "") {
-        res.json({
+        res.status(400).json({
             msg :'Todos los campos son obligatorios',
             
         });
@@ -16,7 +16,7 @@ const crearUsuario = async (req, res) => {
         //Analizamos si el usuario no fue registrado con email
         let usuario = await usuarioModel.findOne({ email });
         if (usuario) {
-            return res.json({
+            return res.status(400).json({
                 mensaje:'El usuario registrado ya existe',
             });
         }
@@ -25,19 +25,22 @@ const crearUsuario = async (req, res) => {
         usuario = new usuarioModel(req.body);
         
         const salt = bcrypt.genSaltSync(10); //le da la robustes a nuestro numero
-        const hash = bcrypt.hashSync(password, salt);
+        usuario.password = bcrypt.hashSync(password, salt);
+        console.log(usuario);
         
 
         //guardamos en la base de datos
         await usuario.save();
 
 
-        res.json({
+        res.status(201).json({
             msg: 'usuario creado',
         });
         
     } catch (error) {
-        console.log(error);
+        res.status(500).json({
+            msg: 'Contactarse con un administrador',
+        })
     }
     
     
