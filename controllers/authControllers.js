@@ -4,55 +4,50 @@ const bcrypt = require('bcrypt');
 const crearUsuario = async (req, res) => {
     
     try {
-        const { name, edad, email, password } = req.body;
+        const { nombre,email,contraseña } = req.body;
 
     //validaciones 
-    if (name === "" || edad === "" || email === "" || password === "") {
+    if (nombre === "" || email === "" || contraseña === "") {
         res.status(400).json({
             msg :'Todos los campos son obligatorios',
-            
         });
         }
+
         //Analizamos si el usuario no fue registrado con email
         let usuario = await usuarioModel.findOne({ email });
         if (usuario) {
             return res.status(400).json({
-                mensaje:'El usuario registrado ya existe',
+                mensaje:'Ya existe un usuario con ese email',
             });
         }
 
-
+        // si todo OK, guardamos el usuario en la base de datos
         usuario = new usuarioModel(req.body);
         
         const salt = bcrypt.genSaltSync(10); //le da la robustes a nuestro numero
-        usuario.password = bcrypt.hashSync(password, salt);
+        usuario.contraseña = bcrypt.hashSync(contraseña, salt);
         console.log(usuario);
         
-
-        //guardamos en la base de datos
         await usuario.save();
 
-
         res.status(201).json({
-            msg: 'usuario creado',
+            msg: 'Usuario creado con éxito',
         });
         
     } catch (error) {
         res.status(500).json({
-            msg: 'Contactarse con un administrador',
+            msg: 'Error, por favor contactarse con el administrador',
         })
     }
-    
-    
 };
 
 const loginUsuario = async (req, res) => {
     
     try {
-        const { email, password } = req.body;
-        //validaciones
+        const { email, contraseña } = req.body;
 
-        if (email === '' || password === '') {
+        //validaciones
+        if (email === '' || contraseña === '') {
             res.status(400).json({
                 msg :'Todos los campos son obligatorios',            
             });
@@ -61,23 +56,21 @@ const loginUsuario = async (req, res) => {
         let usuario = await usuarioModel.findOne({ email });
         if (!usuario) {
             return res.status(400).json({
-                mensaje: 'El email o contraseña no existe',
+                mensaje: 'Email inválido',
             });
         }
     
         //validamos password, vamos a comparar la contraseña del correo que encontre con la que ingreso el usuario
-        const validarPassword = bcrypt.compareSync(password, usuario.password); // true
+        const validarPassword = bcrypt.compareSync(contraseña, usuario.contraseña); // true
        
         if (!validarPassword) {
             res.status(400).json({
-                msg: 'El email o contraseña no existe',
+                msg: 'Contraseña incorrecta',
             });
         }
         
-        
         res.status(200).json({
-    
-            msg: 'Login exitoso',
+        msg: 'Login exitoso',
         }); 
         
     } catch (error) {
@@ -87,9 +80,6 @@ const loginUsuario = async (req, res) => {
         
     }
 
-
-
-   
 };
 
 
