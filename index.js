@@ -15,6 +15,7 @@ app.use(cors({
 
 // Middleware para las rutas de autenticación
 app.use('/auth', require('./router/authRouter'));
+app.use('/admin', require('./router/adminRouter'));
 
 // Conectar a la base de datos
 dbConnection(); 
