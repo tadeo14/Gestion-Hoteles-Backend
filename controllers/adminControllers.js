@@ -36,4 +36,24 @@ const crearHabitacion = async (req,res) => {
     
 };
 
-module.exports = {crearHabitacion};
+const listaHabitaciones = async (req, res) => {
+    try {
+        
+        //traemos el listado de habitaciones
+        const habitaciones = await habitacionModel.find();
+
+        res.status(200).json({
+            msg: 'lista de productos enviada',
+            habitaciones,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+    
+
+}
+
+module.exports = {crearHabitacion,listaHabitaciones};

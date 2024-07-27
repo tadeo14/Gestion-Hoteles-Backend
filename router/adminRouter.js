@@ -1,5 +1,5 @@
 const express = require("express");
-const { crearHabitacion } = require("../controllers/adminControllers");
+const { crearHabitacion,listaHabitaciones } = require("../controllers/adminControllers");
 const routerAdmin = express.Router();
 
 //Creacion de los endpoints para gestionar las habitaciones 
