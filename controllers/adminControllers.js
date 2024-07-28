@@ -58,10 +58,31 @@ const listaHabitaciones = async (req, res) => {
 
 const editarHabitacion = async (req, res) => {
     try {
-        
+        //creamos una variable para reemplzar el req.body
+        const {numero,tipo,precio,disponibilidad,imagen, _id} = req.body;
+        //validaciones 
+        if (numero === "" || tipo === "" || precio === "" || disponibilidad === "") {
+            res.status(400).json({
+                msg: 'Todos los campos numero, tipo, precio y disponibilidad son obligatorios',
+            });
+            }
 
+        //verificamos si el id existe 
+        const habitacionEditar = await habitacionModel.findById(_id);
+
+        //verificamos que el id exista
+        if (!habitacionEditar) {
+            res.status(400).json({
+                msg: 'Habitación no encontrada',
+            });
+        }
+        
+        //editamos el producto
+        await habitacionModel.findByIdAndUpdate(_id,req.body);
+              
+        
         res.status(200).json({
-            
+            msg: 'producto editado',
         });
 
     } catch (error) {
