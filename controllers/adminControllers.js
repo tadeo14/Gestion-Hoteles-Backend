@@ -72,7 +72,7 @@ const editarHabitacion = async (req, res) => {
 
         //verificamos que el id exista
         if (!habitacionEditar) {
-            res.status(400).json({
+            return res.status(400).json({
                 msg: 'Habitación no encontrada',
             });
         }
@@ -92,4 +92,33 @@ const editarHabitacion = async (req, res) => {
     }
 };
 
-module.exports = {crearHabitacion,listaHabitaciones, editarHabitacion};
+const eliminarHabitacion = async (req, res) => {
+    try {
+        //verificamos si el id existe
+        const habitacionEliminar = await habitacionModel.findById(req.params.id);
+
+        //verificamos que el id este eliminado
+        if (!habitacionEliminar) {
+            return res.status(400).json({
+                msg: 'Habitación no encontrada',
+            });
+        }
+
+        //buscamos el id especificado y lo eliminamos
+       await habitacionModel.findByIdAndDelete(req.params.id);
+
+
+
+
+        res.status(200).json({
+            msg: 'Habitación eliminada',
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+};
+
+
+module.exports = {crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion};

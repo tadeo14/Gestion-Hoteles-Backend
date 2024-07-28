@@ -7,7 +7,7 @@ routerAdmin.get('/habitaciones', listaHabitaciones);
 
 routerAdmin.post('/crearHabitacion',crearHabitacion);
 routerAdmin.put('/editarHabitacion',editarHabitacion);
-routerAdmin.delete('/eliminarHabitacion',eliminarHabitacion);
+routerAdmin.delete('/eliminarHabitacion/:id',eliminarHabitacion);
 
 
 module.exports = routerAdmin;
