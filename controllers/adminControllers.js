@@ -53,4 +53,89 @@ const listaUsuarios = async(req,res) => {
 
 
 
-module.exports = {crearHabitacion,listaUsuarios};
+const listaHabitaciones = async (req, res) => {
+    try {
+        
+        //traemos el listado de habitaciones
+        const habitaciones = await habitacionModel.find();
+
+        res.status(200).json({
+            msg: 'lista de productos enviada',
+            habitaciones,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+    
+
+};
+
+const editarHabitacion = async (req, res) => {
+    try {
+        //creamos una variable para reemplzar el req.body
+        const {numero,tipo,precio,disponibilidad,imagen, _id} = req.body;
+        //validaciones 
+        if (numero === "" || tipo === "" || precio === "" || disponibilidad === "") {
+            res.status(400).json({
+                msg: 'Todos los campos numero, tipo, precio y disponibilidad son obligatorios',
+            });
+            }
+
+        //verificamos si el id existe 
+        const habitacionEditar = await habitacionModel.findById(_id);
+
+        //verificamos que el id exista
+        if (!habitacionEditar) {
+            return res.status(400).json({
+                msg: 'Habitación no encontrada',
+            });
+        }
+        
+        //editamos el producto
+        await habitacionModel.findByIdAndUpdate(_id,req.body);
+              
+        
+        res.status(200).json({
+            msg: 'producto editado',
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+};
+
+const eliminarHabitacion = async (req, res) => {
+    try {
+        //verificamos si el id existe
+        const habitacionEliminar = await habitacionModel.findById(req.params.id);
+
+        //verificamos que el id este eliminado
+        if (!habitacionEliminar) {
+            return res.status(400).json({
+                msg: 'Habitación no encontrada',
+            });
+        }
+
+        //buscamos el id especificado y lo eliminamos
+       await habitacionModel.findByIdAndDelete(req.params.id);
+
+
+
+
+        res.status(200).json({
+            msg: 'Habitación eliminada',
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+};
+
+
+module.exports = {crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion,listaUsuarios};
