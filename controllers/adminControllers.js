@@ -54,6 +54,21 @@ const listaHabitaciones = async (req, res) => {
     }
     
 
-}
+};
 
-module.exports = {crearHabitacion,listaHabitaciones};
+const editarHabitacion = async (req, res) => {
+    try {
+        
+
+        res.status(200).json({
+            
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+};
+
+module.exports = {crearHabitacion,listaHabitaciones, editarHabitacion};
