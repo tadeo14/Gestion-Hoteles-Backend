@@ -1,4 +1,6 @@
 const habitacionModel = require("../models/habitacion-model");
+const usuarioModel = require("../models/usuario-model");
+
 
 const crearHabitacion = async (req,res) => {
     try {
@@ -32,8 +34,23 @@ const crearHabitacion = async (req,res) => {
             msg:'Error, por favor contactarse con el administrador'
         })
     }
-
-    
 };
 
-module.exports = {crearHabitacion};
+
+const listaUsuarios = async(req,res) => {
+    try {
+        const listaUsuarios = await usuarioModel.find();
+        res.status(200).json({
+            msg: 'Lista de usuarios enviada',
+            listaUsuarios
+        })
+    } catch (error) {
+        res.status(500).json({
+            msg:'Error, por favor contactarse con el administrador'
+        })
+    }
+}
+
+
+
+module.exports = {crearHabitacion,listaUsuarios};
