@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Middleware para manejar CORS
 app.use(cors({
-	origin: 'http://localhost:5173', // Permitir solicitudes desde tu frontend
+	origin: 'http://localhost:5174', // Permitir solicitudes desde tu frontend
   }));
 
 
