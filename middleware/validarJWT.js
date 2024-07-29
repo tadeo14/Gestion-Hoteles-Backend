@@ -15,18 +15,16 @@ const validarJWT = (req, res, next) => {
     }
     
     const verificarToken = jwt.verify(token, process.env.SECRET_JWT);
-    console.log(verificarToken);
-
-
 
       
   } catch (error) {
-      console.log(error);
-  }
-  
-  
-    
-
+      //si el token es invalida cae aca, en caso de que este vencido
+      return res.status(401).json({
+          msg: 'Token vencido',
+      });
+  }  
+    //Next deja ejecutar el siguiente middleware y si no hay mas ejecuta la funcion del flujo  
+    next();
 
 };
 
