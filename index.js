@@ -2,6 +2,7 @@ const express = require('express');
 const dbConnection = require('./database/config');
 const cors = require('cors');
 const app = express(); 
+
 require('dotenv').config();
 
 // Middleware para manejar las solicitudes JSON
