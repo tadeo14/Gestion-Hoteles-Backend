@@ -17,6 +17,7 @@ app.use(cors({
 // Middleware para las rutas de autenticación
 app.use('/auth', require('./router/authRouter'));
 app.use('/admin', require('./router/adminRouter'));
+app.use('/room', require('./router/roomRouter ')); //***** */
 
 
 // Conectar a la base de datos
