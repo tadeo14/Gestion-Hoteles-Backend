@@ -45,32 +45,30 @@ const crearUsuario = async (req, res) => {
 };
 
 const loginUsuario = async (req, res) => {
-    
     try {
-        const { email, contraseña } = req.body;
-
-        //validaciones
-        if (email === '' || contraseña === '') {
-            res.status(400).json({
-                msg :'Todos los campos son obligatorios',            
-            });
-        }
-
-        let usuario = await usuarioModel.findOne({ email });
-        if (!usuario) {
-            return res.status(400).json({
-                mensaje: 'Email inválido',
-            });
-        }
-    
-        //validamos password, vamos a comparar la contraseña del correo que encontre con la que ingreso el usuario
-        const validarPassword = bcrypt.compareSync(contraseña, usuario.contraseña); // true
-       
-        if (!validarPassword) {
-            res.status(400).json({
-                msg: 'Contraseña incorrecta',
-            });
-        }
+      const { email, contraseña } = req.body;
+  
+      // Validaciones
+      if (email === "" || contraseña === "") {
+        return res.status(400).json({
+          mensaje: "Todos los campos son obligatorios",
+        });
+      }
+  
+      let usuario = await usuarioModel.findOne({ email });
+      if (!usuario) {
+        return res.status(400).json({
+          mensaje: "Email inválido",
+        });
+      }
+  
+      // Validamos password, vamos a comparar la contraseña del correo que encontre con la que ingreso el usuario
+      const validarPassword = bcrypt.compareSync(contraseña, usuario.contraseña);
+      if (!validarPassword) {
+        return res.status(400).json({
+          mensaje: "Contraseña incorrecta",
+        });
+      }
         
         //creamos un objeto el cual definimos los datos que queremos guardar en el token,
         const payload = {
@@ -87,17 +85,14 @@ const loginUsuario = async (req, res) => {
 
 
         res.status(200).json({
-        msg: 'Login exitoso',
-        }); 
-        
-    } catch (error) {
-        res.status(500).json({
-            msg: 'Contactarse con un administrador',
-        })
-        
-    }
-
-};
-
-
-module.exports = { crearUsuario, loginUsuario };
+            mensaje: "Login exitoso",
+          });
+        } catch (error) {
+          res.status(500).json({
+            mensaje: "Contactarse con un administrador",
+          });
+        }
+      };
+      
+      // Exporta ambas funciones
+      module.exports = { crearUsuario, loginUsuario };
