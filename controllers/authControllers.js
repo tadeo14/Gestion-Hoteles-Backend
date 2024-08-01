@@ -82,12 +82,12 @@ const loginUsuario = async (req, res) => {
             expiresIn: '3h',
         });
 
-        console.log(token);
 
 
 
         res.status(200).json({
-        msg: 'Login exitoso',
+            msg: 'Login exitoso',
+            token,
         }); 
         
     } catch (error) {
@@ -98,6 +98,7 @@ const loginUsuario = async (req, res) => {
     }
 
 };
+
 
 
 module.exports = { crearUsuario, loginUsuario };

@@ -7,7 +7,7 @@ const routerAdmin = express.Router();
 routerAdmin.get('/habitaciones',validarJWT, listaHabitaciones);
 
 
-routerAdmin.post('/crearHabitacion',crearHabitacion);
+routerAdmin.post('/crearHabitacion',validarJWT,crearHabitacion);
 routerAdmin.put('/editarHabitacion',validarJWT,editarHabitacion);
 routerAdmin.delete('/eliminarHabitacion/:id',validarJWT,eliminarHabitacion);
 routerAdmin.get('/usuarios',validarJWT,listaUsuarios);
