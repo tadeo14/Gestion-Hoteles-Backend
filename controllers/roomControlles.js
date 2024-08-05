@@ -68,8 +68,20 @@ const cancelarReserva = async (req, res) => {
     }
 };
 
-
+const listadoReservas = async(req,res) => {
+    try {
+        const listadoReservas = await reservaModel.find();
+        res.status(200).json({
+            msg: 'Lista de reservas enviada',
+            listadoReservas
+        })
+    } catch (error) {
+        res.status(500).json({
+            msg:'Error, por favor contactarse con el administrador'
+        })
+    }
+}
 
 //cancelar reserva
 
-module.exports = { realizarReserva, cancelarReserva };
+module.exports = { realizarReserva, cancelarReserva, listadoReservas };
