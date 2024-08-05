@@ -80,19 +80,23 @@ const loginUsuario = async (req, res) => {
             expiresIn: '3h',
         });
 
-        console.log(token);
 
 
 
         res.status(200).json({
-            mensaje: "Login exitoso",
-          });
-        } catch (error) {
-          res.status(500).json({
-            mensaje: "Contactarse con un administrador",
-          });
-        }
-      };
-      
-      // Exporta ambas funciones
-      module.exports = { crearUsuario, loginUsuario };
+            msg: 'Login exitoso',
+            token,
+        }); 
+        
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Contactarse con un administrador',
+        })
+        
+    }
+
+};
+
+
+
+module.exports = { crearUsuario, loginUsuario };
