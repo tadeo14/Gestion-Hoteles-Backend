@@ -21,7 +21,7 @@ const HabitacionSchema = Schema({
    },
    imagen: {
     type: String,
-    required: false
+    required: true
    }
 });
 				
