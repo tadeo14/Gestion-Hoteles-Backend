@@ -77,9 +77,9 @@ const listaHabitaciones = async (req, res) => {
 const editarHabitacion = async (req, res) => {
     try {
         //creamos una variable para reemplzar el req.body
-        const {numero,tipo,precio,disponibilidad,imagen, _id} = req.body;
+        const {numero,tipo,precio, _id} = req.body;
         //validaciones 
-        if (numero === "" || tipo === "" || precio === "" || disponibilidad === "") {
+        if (numero === "" || tipo === "" || precio === "" ) {
             res.status(400).json({
                 msg: 'Todos los campos numero, tipo, precio y disponibilidad son obligatorios',
             });
