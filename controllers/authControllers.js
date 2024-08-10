@@ -64,6 +64,7 @@ const loginUsuario = async (req, res) => {
         }
 
         const payload = {
+            id: usuario._id,  // Incluyendo el ID del usuario en el payload del token
             name: usuario.nombre,
             rol: usuario.rol,
         };
