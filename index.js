@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Middleware para manejar CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Permitir solicitudes desde tu frontend
+    origin: '*', // Permitir solicitudes desde tu frontend
 }));
 
 // Configura la carpeta pública para servir archivos estáticos
