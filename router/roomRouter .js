@@ -12,4 +12,8 @@ routerRoom.delete('/reservas/:reservaId', cancelarReserva);
 
 routerRoom.get('/listadoReservas', listadoReservas);
 
+routerRoom.get('/listadoReservas/:usuarioId', listadoReservas);
+
+
+
 module.exports = routerRoom;

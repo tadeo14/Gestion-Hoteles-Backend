@@ -67,6 +67,25 @@ const cancelarReserva = async (req, res) => {
         res.status(500).json({ message: 'Error al cancelar la reserva', error: error.message });
     }
 };
+const listadoReservasUsuario = async (req, res) => {
+    const { usuarioId } = req.params;
+    
+    // Aquí filtrarías las reservas basadas en el usuarioId
+    const reservas = await Reserva.find({ usuario: usuarioId });
+
+    if (!reservas) {
+        return res.status(404).json({
+            ok: false,
+            msg: 'No se encontraron reservas para este usuario'
+        });
+    }
+
+    res.json({
+        ok: true,
+        listadoReservas: reservas
+    });
+};
+
 
 const listadoReservas = async(req,res) => {
     try {
@@ -84,4 +103,4 @@ const listadoReservas = async(req,res) => {
 
 //cancelar reserva
 
-module.exports = { realizarReserva, cancelarReserva, listadoReservas };
+module.exports = { realizarReserva, cancelarReserva, listadoReservas, listadoReservasUsuario };
