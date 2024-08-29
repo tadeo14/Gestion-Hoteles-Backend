@@ -71,7 +71,7 @@ const listadoReservasUsuario = async (req, res) => {
     const { usuarioId } = req.params;
     
     // Aquí filtrarías las reservas basadas en el usuarioId
-    const reservas = await Reserva.find({ usuario: usuarioId });
+    const reservas = await reservaModel.find({ usuario: usuarioId });
 
     if (!reservas) {
         return res.status(404).json({
