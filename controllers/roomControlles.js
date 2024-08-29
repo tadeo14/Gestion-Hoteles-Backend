@@ -44,7 +44,24 @@ const realizarReserva = async (req, res) => {
         res.status(500).json({ message: 'Error al crear la reserva', error : error.message });
     }
 };
+const listadoReservasUsuario = async (req, res) => {
+    const { usuarioId } = req.params;
+    
+    // Aquí filtrarías las reservas basadas en el usuarioId
+    const reservas = await reservaModel.find({ usuario: usuarioId });
 
+    if (!reservas) {
+        return res.status(404).json({
+            ok: false,
+            msg: 'No se encontraron reservas para este usuario'
+        });
+    }
+
+    res.json({
+        ok: true,
+        listadoReservas: reservas
+    });
+};
 // Cancelar reserva
 const cancelarReserva = async (req, res) => {
     const { reservaId } = req.params; // Usaremos el ID de la reserva en la URL para identificarla
@@ -84,4 +101,4 @@ const listadoReservas = async(req,res) => {
 
 //cancelar reserva
 
-module.exports = { realizarReserva, cancelarReserva, listadoReservas };
+module.exports = { realizarReserva, cancelarReserva, listadoReservas, listadoReservasUsuario };
