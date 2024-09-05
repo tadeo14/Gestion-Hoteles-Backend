@@ -138,5 +138,22 @@ const eliminarHabitacion = async (req, res) => {
     }
 };
 
+const editarUsuario  = async (req, res) => {
+    //editar usuario
+    try {
+        res.status(200).json({
+            msg:'Producto creado',
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
+};
 
-module.exports = {crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion,listaUsuarios};
+const eliminarUsuario  = async (req, res) => {
+    //eliminar usuario
+};
+
+module.exports = {eliminarUsuario, editarUsuario, crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion,listaUsuarios};

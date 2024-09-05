@@ -1,5 +1,5 @@
 const express = require("express");
-const { crearHabitacion, listaUsuarios,listaHabitaciones, editarHabitacion, eliminarHabitacion } = require("../controllers/adminControllers");
+const { crearHabitacion, listaUsuarios,listaHabitaciones,eliminarUsuario,  editarHabitacion, eliminarHabitacion, editarUsuario } = require("../controllers/adminControllers");
 const { validarJWT } = require("../middleware/validarJWT");
 const routerAdmin = express.Router();
 
@@ -11,6 +11,10 @@ routerAdmin.post('/crearHabitacion',validarJWT,crearHabitacion);
 routerAdmin.put('/editarHabitacion',validarJWT,editarHabitacion);
 routerAdmin.delete('/eliminarHabitacion/:id',validarJWT,eliminarHabitacion);
 routerAdmin.get('/usuarios',validarJWT,listaUsuarios);
+
+routerAdmin.put('/editarUsuario', validarJWT, editarUsuario);
+routerAdmin.delete('/eliminarUsuario/:id',validarJWT,eliminarUsuario);
+
 
 
 module.exports = routerAdmin;
