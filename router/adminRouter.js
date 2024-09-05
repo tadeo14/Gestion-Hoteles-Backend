@@ -12,7 +12,7 @@ routerAdmin.put('/editarHabitacion',validarJWT,editarHabitacion);
 routerAdmin.delete('/eliminarHabitacion/:id',validarJWT,eliminarHabitacion);
 routerAdmin.get('/usuarios',validarJWT,listaUsuarios);
 
-routerAdmin.put('/editarUsuario',  editarUsuario);
+routerAdmin.put('/editarUsuario', validarJWT, editarUsuario);
 routerAdmin.delete('/eliminarUsuario/:id',eliminarUsuario);
 
 
