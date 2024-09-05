@@ -125,9 +125,6 @@ const eliminarHabitacion = async (req, res) => {
         //buscamos el id especificado y lo eliminamos
        await habitacionModel.findByIdAndDelete(req.params.id);
 
-
-
-
         res.status(200).json({
             msg: 'Habitación eliminada',
         });
@@ -141,10 +138,33 @@ const eliminarHabitacion = async (req, res) => {
 const editarUsuario  = async (req, res) => {
     //editar usuario
     try {
-        res.status(200).json({
-            msg:'Producto creado',
-        });
+        //creamos una variable para reemplzar el req.body
+        const {nombre,email,contraseña,_id} = req.body;
+        //validaciones 
+        if (nombre === "" || email === "" || contraseña === "" ) {
+            res.status(400).json({
+                msg: 'Todos los campos nombre, email y  contraseña',
+            });
+            }
+
+        //verificamos si el id existe 
+        const usuarioEditar = await usuarioModel.findById(_id);
+
+        //verificamos que el id exista
+        if (!usuarioEditar) {
+            return res.status(400).json({
+                msg: 'Usuario no encontrada',
+            });
+        }
         
+        //editamos el usuario
+        await usuarioModel.findByIdAndUpdate(_id,req.body);
+              
+        
+        res.status(200).json({
+            msg: 'Usuario editado',
+        });
+
     } catch (error) {
         res.status(500).json({
             msg: 'Error, por favor contactarse con el administrador',
@@ -152,8 +172,12 @@ const editarUsuario  = async (req, res) => {
     }
 };
 
-const eliminarUsuario  = async (req, res) => {
+const eliminarUsuario  =  (req, res) => {
     //eliminar usuario
+    
+    res.status(200).json({
+        msg: 'eliminar usuario',
+    })
 };
 
 module.exports = {eliminarUsuario, editarUsuario, crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion,listaUsuarios};
