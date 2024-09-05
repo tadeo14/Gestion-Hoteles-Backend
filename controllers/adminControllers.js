@@ -1,6 +1,6 @@
 const habitacionModel = require("../models/habitacion-model");
 const usuarioModel = require("../models/usuario-model");
-
+const bcrypt = require('bcrypt');
 
 
 const crearHabitacion = async (req,res) => {
@@ -94,8 +94,10 @@ const editarHabitacion = async (req, res) => {
                 msg: 'Habitación no encontrada',
             });
         }
-        
-        //editamos el producto
+
+      
+
+        //editamos la habitacion
         await habitacionModel.findByIdAndUpdate(_id,req.body);
               
         
@@ -135,37 +137,46 @@ const eliminarHabitacion = async (req, res) => {
     }
 };
 
-const editarUsuario  = async (req, res) => {
-    //editar usuario
+const editarUsuario = async (req, res) => {
     try {
-        //creamos una variable para reemplzar el req.body
-        const {nombre,email,contraseña,_id} = req.body;
-        //validaciones 
-        if (nombre === "" || email === "" || contraseña === "" ) {
-            res.status(400).json({
-                msg: 'Todos los campos nombre, email y  contraseña',
-            });
-            }
+        // Desestructuramos los datos recibidos en la solicitud
+        const { nombre, email, contraseña, _id } = req.body;
 
-        //verificamos si el id existe 
-        const usuarioEditar = await usuarioModel.findById(_id);
-
-        //verificamos que el id exista
-        if (!usuarioEditar) {
+        // Validaciones
+        if (!nombre || !email || !contraseña) {
             return res.status(400).json({
-                msg: 'Usuario no encontrada',
+                msg: 'Todos los campos nombre, email y contraseña son obligatorios',
             });
         }
-        
-        //editamos el usuario
-        await usuarioModel.findByIdAndUpdate(_id,req.body);
-              
-        
+
+        // Verificamos si el usuario con el ID proporcionado existe
+        const usuarioEditar = await usuarioModel.findById(_id);
+
+        if (!usuarioEditar) {
+            return res.status(400).json({
+                msg: 'Usuario no encontrado',
+            });
+        }
+
+        // Si hay una nueva contraseña, la encriptamos
+        const salt = bcrypt.genSaltSync(10);
+        const contraseñaEncriptada = bcrypt.hashSync(contraseña, salt);
+
+        // Actualizamos los datos del usuario, incluida la contraseña encriptada
+        await usuarioModel.findByIdAndUpdate(_id, {
+            nombre,
+            email,
+            contraseña: contraseñaEncriptada
+        });
+
+        // Respuesta exitosa
         res.status(200).json({
-            msg: 'Usuario editado',
+            msg: 'Usuario editado correctamente',
         });
 
     } catch (error) {
+        // Manejo de errores
+        console.error(error);
         res.status(500).json({
             msg: 'Error, por favor contactarse con el administrador',
         });
