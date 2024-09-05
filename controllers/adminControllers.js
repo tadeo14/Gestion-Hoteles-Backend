@@ -183,12 +183,30 @@ const editarUsuario = async (req, res) => {
     }
 };
 
-const eliminarUsuario  =  (req, res) => {
+const eliminarUsuario  =  async (req, res) => {
     //eliminar usuario
-    
-    res.status(200).json({
-        msg: 'eliminar usuario',
-    })
+    try {
+        //verificamos si el id existe
+        const usuarioEliminar = await usuarioModel.findById(req.params.id);
+
+        //verificamos que el id este eliminado
+        if (!usuarioEliminar) {
+            return res.status(400).json({
+                msg: 'Usuario no encontrada',
+            });
+        }
+
+        //buscamos el id especificado y lo eliminamos
+       await usuarioModel.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            msg: 'Usuario eliminada',
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Error, por favor contactarse con el administrador',
+        });
+    }
 };
 
 module.exports = {eliminarUsuario, editarUsuario, crearHabitacion,listaHabitaciones, editarHabitacion, eliminarHabitacion,listaUsuarios};
