@@ -3,7 +3,7 @@ const { realizarReserva, cancelarReserva, listadoReservas, listadoReservasUsuari
 const { validarJWT } = require("../middleware/validarJWT");
 const routerRoom = express.Router();
 
-//? Creacion de los endpoints para gestionar las habitaciones 
+
 
 
 routerRoom.post('/reservas', realizarReserva);

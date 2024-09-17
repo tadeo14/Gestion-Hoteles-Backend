@@ -3,7 +3,7 @@ const reservaModel = require("../models/reserva-model");
 
 
 
-//realizar reserva
+
 const realizarReserva = async (req, res) => {
     const { usuarioId, habitacionId, fechaInicio, fechaFin } = req.body;
 
@@ -17,7 +17,7 @@ const realizarReserva = async (req, res) => {
             return res.status(404).json({ message: 'Habitación no encontrada' });
         }
 
-        // Verificar disponibilidad
+        
         const reservasConflictivas = await reservaModel.find({
             habitacion: habitacionId,
             $or: [
@@ -47,7 +47,7 @@ const realizarReserva = async (req, res) => {
 const listadoReservasUsuario = async (req, res) => {
     const { usuarioId } = req.params;
     
-    // Aquí filtrarías las reservas basadas en el usuarioId
+  
     const reservas = await reservaModel.find({ usuario: usuarioId });
 
     if (!reservas) {
@@ -62,16 +62,16 @@ const listadoReservasUsuario = async (req, res) => {
         listadoReservas: reservas
     });
 };
-// Cancelar reserva
+
 const cancelarReserva = async (req, res) => {
-    const { reservaId } = req.params; // Usaremos el ID de la reserva en la URL para identificarla
+    const { reservaId } = req.params; 
 
     if (!reservaId) {
         return res.status(400).json({ message: 'ID de reserva requerido' });
     }
 
     try {
-        // Buscar y eliminar la reserva
+        
         const reservaEliminada = await reservaModel.findByIdAndDelete(reservaId);
 
         if (!reservaEliminada) {
@@ -100,6 +100,6 @@ const listadoReservas = async(req,res) => {
     }
 }
 
-//cancelar reserva
+
 
 module.exports = { realizarReserva, cancelarReserva, listadoReservas, listadoReservasUsuario };
