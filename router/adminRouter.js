@@ -3,7 +3,7 @@ const { crearHabitacion, listaUsuarios,listaHabitaciones,eliminarUsuario,  edita
 const { validarJWT } = require("../middleware/validarJWT");
 const routerAdmin = express.Router();
 
-//? Creacion de los endpoints para gestionar las habitaciones 
+ 
 routerAdmin.get('/habitaciones',validarJWT, listaHabitaciones);
 
 
